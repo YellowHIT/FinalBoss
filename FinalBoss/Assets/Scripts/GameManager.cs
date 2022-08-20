@@ -23,6 +23,6 @@ public class GameManager : MonoBehaviour
     public void RotateBackgroundSky()
     {
         backgroundSky.transform.Rotate(new Vector3(0, 0, 50) * skyRotationSpeed * Time.deltaTime);
-
     }
+
 }
