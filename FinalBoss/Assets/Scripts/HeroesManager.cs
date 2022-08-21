@@ -8,15 +8,28 @@ public class HeroesManager : MonoBehaviour
     public GameManager gameManager;
     public Hero hero;
     public Hero heroAux;
-
+    public GameObject BaseHeroes;
     public bool isTargetSelected;
     public int heroSelected;
+
+    public List<GameObject> prefab;
+
     // Start is called before the first frame update
     void Start()
     {
         isTargetSelected=false;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        BaseHeroes = GameObject.Find("BaseHeroes");
+        foreach(Transform child in BaseHeroes.transform)
+        {
+            prefab.Add(child.gameObject);
+            Debug.Log("Nya");
+        }
+        instantiateHeroes();
         setHeroesIndex();
+
+        Debug.Log(BaseHeroes.transform.GetChild(0));
+
     }
 
     // Update is called once per frame
@@ -25,6 +38,18 @@ public class HeroesManager : MonoBehaviour
         
     }
 
+    public void instantiateHeroes()
+    {
+        for(var i=0; i<4; i++)
+        {
+            var heroClass = Random.Range(0, 4);
+            Debug.Log(prefab[heroClass]);
+            Instantiate(prefab[heroClass], new Vector3(i*0.8f,0,0),Quaternion.identity);
+            // setClass();
+            // setHealth();
+            Debug.Log(heroClass);
+        }
+    }
     public void setHeroesIndex()
     {
         int i=0;
