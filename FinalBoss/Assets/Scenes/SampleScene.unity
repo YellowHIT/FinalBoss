@@ -267,6 +267,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 23010593}
+  - component: {fileID: 23010594}
   m_Layer: 0
   m_Name: Heroes
   m_TagString: Untagged
@@ -293,6 +294,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &23010594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23010592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fc62a310026cf64f91954cdc6700030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroes: {fileID: 0}
 --- !u!1 &23192549
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,7 +651,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 415620429}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1085,6 +1099,7 @@ GameObject:
   m_Component:
   - component: {fileID: 717898943}
   - component: {fileID: 717898944}
+  - component: {fileID: 717898945}
   m_Layer: 0
   m_Name: HeroArcher
   m_TagString: Untagged
@@ -1135,6 +1150,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5375853, y: 2.2501566}
   m_EdgeRadius: 0
+--- !u!114 &717898945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717898942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af1904ecee46a574793cd2944f90da09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroClass: 
+  health: 0
+  colorVariant: 0
+  maxHealth: 3
 --- !u!1 &718167234
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,6 +1176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 718167235}
   - component: {fileID: 718167236}
+  - component: {fileID: 718167237}
   m_Layer: 0
   m_Name: HeroMage
   m_TagString: Untagged
@@ -1195,6 +1227,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5375853, y: 2.2501566}
   m_EdgeRadius: 0
+--- !u!114 &718167237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718167234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af1904ecee46a574793cd2944f90da09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroClass: 
+  health: 0
+  colorVariant: 0
+  maxHealth: 3
 --- !u!1001 &738449372
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2801,6 +2849,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1690340324}
   - component: {fileID: 1690340325}
+  - component: {fileID: 1690340326}
   m_Layer: 0
   m_Name: HeroHealer
   m_TagString: Untagged
@@ -2851,6 +2900,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5375853, y: 2.2501566}
   m_EdgeRadius: 0
+--- !u!114 &1690340326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690340323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af1904ecee46a574793cd2944f90da09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroClass: 
+  health: 0
+  colorVariant: 0
+  maxHealth: 3
 --- !u!1 &1704588761
 GameObject:
   m_ObjectHideFlags: 0
@@ -3029,6 +3094,7 @@ GameObject:
   - component: {fileID: 1748648819}
   - component: {fileID: 1748648820}
   - component: {fileID: 1748648821}
+  - component: {fileID: 1748648822}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3095,6 +3161,24 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1748648822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748648818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a6bb37f4a41208468a2e5a8a8aee487, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: {fileID: 0}
+  skills:
+  - Paws of The Undying
+  - Fire Meow
+  - Nyafe Drain
+  - Fearline
 --- !u!1 &1775023184
 GameObject:
   m_ObjectHideFlags: 0
@@ -3575,8 +3659,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0953c12858a4784409f2ef146945a2e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttons: {fileID: 0}
   backgroundSky: {fileID: 1982124219}
+  player: {fileID: 0}
+  enemies: {fileID: 0}
   skyRotationSpeed: 0.1
+  isPlayerTurn: 0
+  isEnemyTurn: 0
 --- !u!4 &1933247814
 Transform:
   m_ObjectHideFlags: 0
@@ -3601,7 +3690,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4106967144069191872, guid: 7fc30cd74f5aa724387df7546e0f3d5b, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4106967144069191872, guid: 7fc30cd74f5aa724387df7546e0f3d5b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3641,6 +3730,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4106967144069191872, guid: 7fc30cd74f5aa724387df7546e0f3d5b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106967144069191873, guid: 7fc30cd74f5aa724387df7546e0f3d5b, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106967144069191873, guid: 7fc30cd74f5aa724387df7546e0f3d5b, type: 3}
+      propertyPath: m_FlipY
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4106967144069191873, guid: 7fc30cd74f5aa724387df7546e0f3d5b, type: 3}
@@ -3962,6 +4059,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2033593288}
   - component: {fileID: 2033593289}
+  - component: {fileID: 2033593290}
   m_Layer: 0
   m_Name: HeroWarrior
   m_TagString: Untagged
@@ -4012,3 +4110,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5375853, y: 2.2501566}
   m_EdgeRadius: 0
+--- !u!114 &2033593290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033593287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af1904ecee46a574793cd2944f90da09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroClass: 
+  health: 0
+  colorVariant: 0
+  maxHealth: 3
