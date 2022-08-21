@@ -8,21 +8,28 @@ public class Player : MonoBehaviour
     public Health Health;
     // Start is called before the first frame update
     public string[] skills = {"Paws of The Undying","Fire Meow","Nyafe Drain", "Fearline"};
-
+    public float speed;
+    float y0;
+    public float amplitude;
     void Start()
     {
         Health = this.GetComponent<Health>();
         Debug.Log(skills);
+        //save initial y position
+        speed = 1.0f;
+        y0 = transform.position.y;
+        amplitude=0.1f;
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //makes the player float
+        transform.position = new Vector3(transform.position.x, (y0+amplitude*Mathf.Sin(speed*Time.time)), transform.position.z);
     }
 
-    public void useSkill(string skillName, string target)
+    public void useSkill(string skillName, int target)
     {
         if(skillName == "Paw")
             pawSkill(target);
@@ -35,22 +42,22 @@ public class Player : MonoBehaviour
 
     }
 
-    public void pawSkill(string target)
+    public void pawSkill(int target)
     {
-        Debug.Log("Paw");
+        Debug.Log("Paw at "+ target);
         int damage = 1;
         int manaCost = 2;
         //TODO pull 1 position if position > 1
 
     }
-    public void fireSkill(string target)
+    public void fireSkill(int target)
     {
         Debug.Log("Fire");
         int damage = 2;
         int manaCost = 2;
          
     }
-    public void lifeSkill(string target)
+    public void lifeSkill(int target)
     {
         Debug.Log("Life");
         int damage = 2;
@@ -58,7 +65,7 @@ public class Player : MonoBehaviour
         //TODO heal for 3
         
     }
-    public void fearSkill(string target)
+    public void fearSkill(int target)
     {
         Debug.Log("Fear");
         int damage = 0;
@@ -74,6 +81,13 @@ public class Player : MonoBehaviour
         Debug.Log("Aiii cuzao");
 
     }
+
+    public void glow(bool state)
+    {
+        transform.GetChild(1).gameObject.SetActive(state);
+    }
+
+ 
 
 
 }
