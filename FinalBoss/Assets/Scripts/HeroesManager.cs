@@ -28,20 +28,33 @@ public class HeroesManager : MonoBehaviour
             i++;
         }
     }
-
-    public void healLife()
+    public int getLowLife()
     {
-
+        int i=0;
+        int lowerLife = 100;
+        int index=0;
+        foreach (Transform child in transform)
+        {
+            hero = child.GetComponent<Hero>();
+            if(hero.health < lowerLife && hero.health > 0)
+            {
+                lowerLife = hero.health;
+                index=i;
+            }
+            i++;
+        }
+        //return hero index with lowest health
+        return index;
     }
 
-    public void takeDamage()
+    
+    public void healLife(int quantity,int position)
     {
+        hero = transform.GetChild(position).GetComponent<Hero>();
 
-    }
-
-    public void useSkill()
-    {
-
+        hero.health+=quantity;
+        if(hero.health > hero.maxHealth)
+            hero.health=hero.maxHealth;
     }
 
     public void instantiateHeroes()
@@ -52,5 +65,15 @@ public class HeroesManager : MonoBehaviour
     public void killHero()
     {
 
+    }
+
+    public void takeTurn()
+    {
+
+        foreach (Transform child in transform)
+        {
+            hero = child.GetComponent<Hero>();
+            hero.useSkill();
+        }
     }
 }
