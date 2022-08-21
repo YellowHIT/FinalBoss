@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     public Health Health;
     public Mana Mana;
     // Start is called before the first frame update
-    public string[] skills = {"Paws of The Undying","Fire Meow","Nyafe Drain", "Fearline"};
+    public string[] skills;
     public float speed;
     float y0;
     public float amplitude;
@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
         Mana = this.GetComponent<Mana>();
 
 
-        Debug.Log(skills);
+        skills = new string[4]{"Paw of Doom","Fire Meow","Nyafe Drain", "Fearline"};
         //save initial y position
         speed = 1.0f;
         y0 = transform.position.y;
@@ -57,6 +57,8 @@ public class Player : MonoBehaviour
         int manaCost = 2;
         //TODO pull 1 position if position > 1
         heroesManager.dealDamage(damage,target);
+        if(target>0)
+            heroesManager.changeHeroPosition(target,target-1);
         spendMana(manaCost);
     }
     public void fireSkill(int target)
@@ -75,16 +77,17 @@ public class Player : MonoBehaviour
         int manaCost = 3;
         //TODO heal for 3
         heroesManager.dealDamage(damage,target);
+        recoverLife(3);
         spendMana(manaCost);
 
     }
     public void fearSkill(int target)
     {
         Debug.Log("Fear at"+ target);
-        int damage = 0;
         int manaCost = 1;
         //TODO interrupt a enemy
-        heroesManager.dealDamage(damage,target);
+        // heroesManager.dealDamage(damage,target);c
+        heroesManager.confuseTarget(target);
         spendMana(manaCost);
 
     }
@@ -98,6 +101,15 @@ public class Player : MonoBehaviour
     void spendMana(int quantity)
     {
         Mana.mana -= quantity ;
+    }
+
+    public void recoverMana(int quantity)
+    {
+        Mana.mana += quantity ;
+    }
+    public void recoverLife(int quantity)
+    {
+        Health.health += quantity ;
     }
 
     public void glow(bool state)

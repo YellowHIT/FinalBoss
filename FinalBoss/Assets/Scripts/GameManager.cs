@@ -82,8 +82,10 @@ public class GameManager : MonoBehaviour
         else if(isPlayerTurn)
         {
             player.glow(false);
+            player.recoverMana(3);
             isEnemyTurn=true;
             isPlayerTurn=false;
+            
             enemyTurn();
         }
     }
@@ -108,6 +110,8 @@ public class GameManager : MonoBehaviour
             // child.gameObject.GetComponent<Button>().onClick.AddListener(()=>{takeDamage("player",1);});
             else
             {
+                Debug.Log(player.skills[i]);
+                text.text = player.skills[i];
                 switch (i)
                 {
                     case 0:
@@ -151,7 +155,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-
+                
                 button.onClick.RemoveAllListeners();
                 i++;
 
@@ -198,13 +202,7 @@ public class GameManager : MonoBehaviour
         // Debug.Log("hero Selected "+heroesManager.heroSelected);
         target = heroesManager.heroSelected;
     }
-    // private IEnumerator WaitUntilEvent(UnityEvent unityEvent) {
-    //     int heroSelected = -1;
-    //     Action action = () => heroSelected >= 0;
-    //     unityEvent.AddListener(action.Invoke);
-    //     yield return new WaitUntil(()=>heroSelected >= 0);
-    //     unityEvent.RemoveListener(action.Invoke);
-    // }
+
     private IEnumerator waitTarget(int index)
     {
         yield return new WaitUntil(() => (target >= 0));
@@ -226,6 +224,11 @@ public class GameManager : MonoBehaviour
         target = -1;
         heroClick.RemoveAllListeners();
 
+    }
+
+    public void playerWon()
+    {
+        Debug.Log("!BOAMANO");
     }
     
 }
