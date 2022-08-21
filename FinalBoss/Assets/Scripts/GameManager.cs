@@ -192,15 +192,10 @@ public class GameManager : MonoBehaviour
         StartCoroutine(heroesManager.takeTurn());
     }
 
-    public int selectTarget()
-    {
-        // WaitUntilEvent();
-        return 0;
-    }
     
     void heroSelected()
     {
-        Debug.Log("hero Selected "+heroesManager.heroSelected);
+        // Debug.Log("hero Selected "+heroesManager.heroSelected);
         target = heroesManager.heroSelected;
     }
     // private IEnumerator WaitUntilEvent(UnityEvent unityEvent) {

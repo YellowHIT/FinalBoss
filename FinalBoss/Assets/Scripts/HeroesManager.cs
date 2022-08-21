@@ -82,4 +82,8 @@ public class HeroesManager : MonoBehaviour
         gameManager.buttonFunctionManager();
     }
 
+    public void dealDamage(int quantity,int position)
+    {
+        transform.GetChild(position).GetComponent<Hero>().takeDamage(quantity);
+    }
 }
