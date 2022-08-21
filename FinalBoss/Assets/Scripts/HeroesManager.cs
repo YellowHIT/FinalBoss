@@ -68,6 +68,20 @@ public class HeroesManager : MonoBehaviour
             gameManager.playerWon();
 
     }
+    public Transform getHeroByIndex(int index)
+    {
+        int i=0;
+        foreach (Transform child in transform)
+        {
+            // Debug.Log(child);
+
+            hero = child.GetComponent<Hero>();
+            if(hero.position == index)
+                return child;
+            i++;
+        }
+        return null;
+    }
     public int getLowLife()
     {
         int i=0;
@@ -110,7 +124,6 @@ public class HeroesManager : MonoBehaviour
     public IEnumerator takeTurn()
     {
         WaitForSeconds wait = new WaitForSeconds( 1f ) ;
-
         foreach (Transform child in transform)
         {
             hero = child.GetComponent<Hero>();
@@ -141,12 +154,6 @@ public class HeroesManager : MonoBehaviour
             }
         }
         heroDamaged.GetComponent<Hero>().takeDamage(quantity);
-        // if(heroDamaged.GetComponent<Hero>().dead)
-        // {
-        //     // heroDamaged.transform.SetParent(null);
-        //     // Destroy(heroDamaged.gameObject);
-        //     // setHeroesIndex();
-        // }
 
     }
     public void confuseTarget(int position)

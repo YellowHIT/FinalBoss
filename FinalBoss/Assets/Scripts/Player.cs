@@ -65,6 +65,9 @@ public class Player : MonoBehaviour
         }
         else
         {
+            gameManager.indexTarget=target;
+            gameManager.indexSource=-1;
+            gameManager.skillNumber=0;
             heroesManager.dealDamage(damage,target);
             if(target>0)
                 heroesManager.changeHeroPosition(target,target-1);
@@ -83,6 +86,9 @@ public class Player : MonoBehaviour
         }
         else
         {
+            gameManager.indexTarget=target;
+            gameManager.indexSource=-1;
+            gameManager.skillNumber=4;
             Debug.Log("Fire at"+ target);
             heroesManager.dealDamage(damage,target);
             spendMana(manaCost);
@@ -101,6 +107,9 @@ public class Player : MonoBehaviour
         }
         else
         {
+            gameManager.indexTarget=-1;
+            gameManager.indexSource=target;
+            gameManager.skillNumber=3;
             Debug.Log("Life at"+ target);
             heroesManager.dealDamage(damage,target);
             recoverLife(3);
@@ -175,7 +184,6 @@ public class Player : MonoBehaviour
 
     public void slash(bool state)
     {
-        Debug.Log("Slash");
         transform.GetChild(2).gameObject.SetActive(state);
     }
 }

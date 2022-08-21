@@ -27,12 +27,22 @@ public class GameManager : MonoBehaviour
     public float skyRotationSpeed;
     
     public bool isPlayerTurn;
-
+    public bool OnScreen;
     public bool isEnemyTurn; 
 
     public UnityEvent heroClick;
 
     public int target;
+
+    public float MoveSpeed;
+
+    public int indexTarget;
+    public int indexSource;
+    public int skillNumber;
+
+    public GameObject projectiles;
+    public GameObject projectilesOnScreen;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,12 +54,18 @@ public class GameManager : MonoBehaviour
         buttons = GameObject.Find("Panel");
         player = GameObject.Find("Player").GetComponent<Player>();
         heroesManager = GameObject.Find("Heroes").GetComponent<HeroesManager>();
+        
+        projectiles = GameObject.Find("Projectiles");
+        projectilesOnScreen = GameObject.Find("ProjectilesOnScreen");
+
         buttonFunctionManager();
 
         player.glow(true);
 
-
-        
+        indexTarget=-1;
+        indexSource=-1;
+        skillNumber=-1;
+        OnScreen=false;
     }
 
     // Update is called once per frame
@@ -64,6 +80,9 @@ public class GameManager : MonoBehaviour
             heroClick.Invoke();
 
         }
+        // goTowardsTarget(-1, GameObject.Find("Arrow"));
+        animateSkill(indexTarget,skillNumber,indexSource);
+
     }
 
     public void RotateBackgroundSky()
@@ -86,6 +105,7 @@ public class GameManager : MonoBehaviour
             player.glow(true);
             isEnemyTurn=false;
             isPlayerTurn=true;
+
         }
         else if(isPlayerTurn)
         {
@@ -95,6 +115,7 @@ public class GameManager : MonoBehaviour
             isPlayerTurn=false;
             
             enemyTurn();
+
         }
     }
 
@@ -202,6 +223,7 @@ public class GameManager : MonoBehaviour
     {
         buttonEnemyTurn();
         StartCoroutine(heroesManager.takeTurn());
+
     }
 
     
@@ -213,16 +235,20 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator waitTarget(int index)
     {
+        var playerIndex = -1;
         yield return new WaitUntil(() => (target >= 0));
         switch (index)
         {
             case 0:
+
                 player.useSkill("Paw",target);
                 break;
             case 1:
+
                 player.useSkill("Fire",target);
                 break;
             case 2:
+
                 player.useSkill("Life",target);
                 break;
             case 3:
@@ -236,18 +262,97 @@ public class GameManager : MonoBehaviour
 
     public void playerWon()
     {
-        Debug.Log("!BOAMANO");
+        SceneManager.LoadScene(1);
     }
 
     public void GameOver()
     {
         //TODO
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(2);
     }
 
     public void slash(bool state)
     {
-        player.slash(true);
+        player.slash(state);
     }
     
+
+
+
+
+
+    void goTowardsTarget(int indexTarget, GameObject prefabOject,int indexSource)
+    {
+        GameObject projectile = prefabOject;
+        float MinDist=0.1f;
+        GameObject playerPosition = player.gameObject.transform.GetChild(1).gameObject;
+        if(indexTarget == -1)
+        {
+            projectile.transform.LookAt(playerPosition.transform);
+
+            if (Vector3.Distance(projectile.transform.position, playerPosition.transform.position) >= MinDist)
+            {
+                //transllate towards player
+                projectile.transform.position+=projectile.transform.forward * MoveSpeed * Time.deltaTime;
+                projectile.transform.rotation = Quaternion.identity;
+            }
+            else
+            {
+                indexTarget=-1;
+                indexSource=-1;
+                skillNumber=-1;
+                OnScreen=false;
+                Destroy(projectile);
+            }
+
+        }
+        else
+        {
+            Transform targetHero = heroesManager.getHeroByIndex(indexTarget);
+
+            projectile.transform.LookAt(targetHero);
+
+            if (Vector3.Distance(projectile.transform.position, targetHero.position) >= MinDist)
+            {
+                //transllate towards player
+                projectile.transform.position+=projectile.transform.forward * MoveSpeed * Time.deltaTime;
+                projectile.transform.rotation = Quaternion.identity;
+
+            }
+            else
+            {
+                indexTarget=-1;
+                indexSource=-1;
+                skillNumber=-1;
+                OnScreen=false;
+                Destroy(projectile);
+            }
+        }
+    }
+
+    void animateSkill(int indexTarget, int skillNumber,int indexSource)
+    {
+        GameObject playerPosition = player.gameObject.transform.GetChild(1).gameObject;
+        if(indexSource ==-1 && indexTarget==-1)
+            return;
+        else
+        {
+            if(OnScreen == false)
+            {
+                if(indexSource==-1)
+                {
+                    projectilesOnScreen = Instantiate(projectiles.transform.GetChild(skillNumber).gameObject,playerPosition.transform.position,Quaternion.identity);
+                }
+                else
+                {
+                    projectilesOnScreen = Instantiate(projectiles.transform.GetChild(skillNumber).gameObject,heroesManager.getHeroByIndex(indexSource).transform.position,Quaternion.identity);
+                }
+                projectilesOnScreen.SetActive(true);
+                OnScreen=true;
+            }
+            goTowardsTarget(indexTarget,projectilesOnScreen,indexSource);
+        } 
+    }
+
+
 }

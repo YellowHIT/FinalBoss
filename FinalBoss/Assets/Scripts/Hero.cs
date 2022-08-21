@@ -129,6 +129,9 @@ public class Hero : MonoBehaviour
             }
             else if(heroClass == "archer")
             {
+                gameManager.indexTarget=-1;
+                gameManager.indexSource=position;
+                gameManager.skillNumber=2;
                 doubleStrike();   
             }
             else if(heroClass == "healer")
@@ -137,6 +140,9 @@ public class Hero : MonoBehaviour
             }
             else if(heroClass == "mage")
             {
+                gameManager.indexTarget=-1;
+                gameManager.indexSource=position;
+                gameManager.skillNumber=5;
                 fireBall();
             }
         }
@@ -162,6 +168,7 @@ public class Hero : MonoBehaviour
     {
         Debug.Log("DoubleStrike");
         gameManager.takeDamage("player",2,-1);
+
     }
     public void heal()
     {
