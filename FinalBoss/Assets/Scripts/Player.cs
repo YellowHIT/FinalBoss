@@ -14,10 +14,12 @@ public class Player : MonoBehaviour
     public float amplitude;
 
     public HeroesManager heroesManager;
+    public GameManager gameManager;
     public bool dead;
     void Start()
     {
         heroesManager = GameObject.Find("Heroes").GetComponent<HeroesManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         Health = this.GetComponent<Health>();
         Mana = this.GetComponent<Mana>();
@@ -165,7 +167,15 @@ public class Player : MonoBehaviour
     {
         dead=true;
         transform.GetChild(0).GetComponent<SpriteRenderer>().flipY = true;
+        gameManager.GameOver();
+
+
 
     }
 
+    public void slash(bool state)
+    {
+        Debug.Log("Slash");
+        transform.GetChild(2).gameObject.SetActive(state);
+    }
 }

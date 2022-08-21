@@ -79,7 +79,7 @@ public class HeroesManager : MonoBehaviour
             if(hero.health < lowerLife && hero.health > 0)
             {
                 lowerLife = hero.health;
-                index=i;
+                index=hero.position;
             }
             i++;
         }
@@ -90,11 +90,21 @@ public class HeroesManager : MonoBehaviour
     
     public void healLife(int quantity,int position)
     {
-        hero = transform.GetChild(position).GetComponent<Hero>();
+        // hero = transform.GetChild(position).GetComponent<Hero>();
+        GameObject hero = null;   
+        foreach(Transform child in transform)
+        {
+            if(child.GetComponent<Hero>().position == position)
+            {
+                hero = child.gameObject;
+            }
+        }
+        var heroAux =hero.GetComponent<Hero>();
+        heroAux.transform.GetChild(5).gameObject.SetActive(true);
+        heroAux.health+=quantity;
+        if(heroAux.health > heroAux.maxHealth)
+            heroAux.health=heroAux.maxHealth;
 
-        hero.health+=quantity;
-        if(hero.health > hero.maxHealth)
-            hero.health=hero.maxHealth;
     }
 
     public IEnumerator takeTurn()
@@ -104,13 +114,18 @@ public class HeroesManager : MonoBehaviour
         foreach (Transform child in transform)
         {
             hero = child.GetComponent<Hero>();
+            hero.transform.GetChild(5).gameObject.SetActive(false);
+
             hero.glow(true);
             hero.useSkill();
             yield return wait;
             heroAux = child.GetComponent<Hero>();
             heroAux.glow(false);
+            heroAux.transform.GetChild(5).gameObject.SetActive(false);
 
         }
+        gameManager.slash(false);
+        
         gameManager.passTurn();
         gameManager.buttonFunctionManager();
     }
@@ -136,8 +151,16 @@ public class HeroesManager : MonoBehaviour
     }
     public void confuseTarget(int position)
     {
-        var heroDamaged = transform.GetChild(position); 
-        heroDamaged.GetComponent<Hero>().confusion = 2;
+        GameObject heroDamaged = null;   
+        foreach(Transform child in transform)
+        {
+            if(child.GetComponent<Hero>().position == position)
+            {
+                heroDamaged = child.gameObject;
+                
+            }
+        }
+        heroDamaged.GetComponent<Hero>().confusion = 1;
     }
 
     public void changeHeroPosition(int fromPosition, int toPosition)

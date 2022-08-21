@@ -12,12 +12,14 @@ public class Hero : MonoBehaviour
     public bool dead;
     public bool concentration;
     public int confusion;
+    public bool isHealing;
     public GameManager gameManager;
     
     public HeroesManager heroesManager;
     // Start is called before the first frame update
     void Start()
     {
+        isHealing = false;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         heroesManager = GameObject.Find("Heroes").GetComponent<HeroesManager>();
         confusion = 0;
@@ -30,6 +32,10 @@ public class Hero : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(confusion>0)
+            transform.GetChild(3).gameObject.SetActive(true);
+        else
+            transform.GetChild(3).gameObject.SetActive(false);
 
     }
     private void FixedUpdate() {
@@ -105,6 +111,7 @@ public class Hero : MonoBehaviour
 
     public void useSkill()
     {
+        gameManager.slash(false);
         Debug.Log(heroClass);
         //IF HERO CONFUSED
         if(confusion > 0)
@@ -115,6 +122,7 @@ public class Hero : MonoBehaviour
         }
         else if(dead == false)
         {
+            
             if(heroClass == "warrior")
             {
                 charge();
@@ -147,6 +155,7 @@ public class Hero : MonoBehaviour
     public void charge()
     {
         Debug.Log("Charge");
+        gameManager.slash(true);
         gameManager.takeDamage("player",1,-1);
     }
     public void doubleStrike()

@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
             // child.gameObject.GetComponent<Button>().onClick.AddListener(()=>{takeDamage("player",1);});
             else
             {
-                Debug.Log(player.skills[i]);
+                // Debug.Log(player.skills[i]);
                 text.text = player.skills[i];
                 switch (i)
                 {
@@ -243,6 +243,11 @@ public class GameManager : MonoBehaviour
     {
         //TODO
         SceneManager.LoadScene(0);
+    }
+
+    public void slash(bool state)
+    {
+        player.slash(true);
     }
     
 }
