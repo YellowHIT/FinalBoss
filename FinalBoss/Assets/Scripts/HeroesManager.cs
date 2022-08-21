@@ -5,10 +5,17 @@ using UnityEngine;
 public class HeroesManager : MonoBehaviour
 {
     public GameObject heroes;
+    public GameManager gameManager;
     public Hero hero;
+    public Hero heroAux;
+
+    public bool isTargetSelected;
+    public int heroSelected;
     // Start is called before the first frame update
     void Start()
     {
+        isTargetSelected=false;
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         setHeroesIndex();
     }
 
@@ -57,23 +64,22 @@ public class HeroesManager : MonoBehaviour
             hero.health=hero.maxHealth;
     }
 
-    public void instantiateHeroes()
+    public IEnumerator takeTurn()
     {
-
-    }
-
-    public void killHero()
-    {
-
-    }
-
-    public void takeTurn()
-    {
+        WaitForSeconds wait = new WaitForSeconds( 1f ) ;
 
         foreach (Transform child in transform)
         {
             hero = child.GetComponent<Hero>();
+            hero.glow(true);
             hero.useSkill();
+            yield return wait;
+            heroAux = child.GetComponent<Hero>();
+            heroAux.glow(false);
+
         }
+        gameManager.passTurn();
+        gameManager.buttonFunctionManager();
     }
+
 }

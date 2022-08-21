@@ -78,7 +78,15 @@ public class Hero : MonoBehaviour
     {
         //If your mouse hovers over the GameObject with the script attached, output this message
         transform.GetChild(1).gameObject.SetActive(true);
-        Debug.Log("Mouse is over "+heroClass);
+        // Debug.Log("Mouse is over "+heroClass);
+    }
+    void OnMouseDown()
+    {
+        //If your mouse hovers over the GameObject with the script attached, output this message
+        
+        // Debug.Log("Selected "+heroClass+" At "+position);
+        heroesManager.isTargetSelected = true;
+        heroesManager.heroSelected = position;
     }
     
     void OnMouseExit()
@@ -120,6 +128,7 @@ public class Hero : MonoBehaviour
     public void die()
     {
         dead=true;
+        transform.GetChild(0).GetComponent<SpriteRenderer>().flipY = true;
 
     }
     //skills
@@ -154,5 +163,10 @@ public class Hero : MonoBehaviour
             concentration = false;
             gameManager.takeDamage("player",3,-1);
         }
+    }
+
+    public void glow(bool state)
+    {
+        transform.GetChild(2).gameObject.SetActive(state);
     }
 }
