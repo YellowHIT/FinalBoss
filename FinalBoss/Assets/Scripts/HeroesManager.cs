@@ -117,14 +117,21 @@ public class HeroesManager : MonoBehaviour
 
     public void dealDamage(int quantity,int position)
     {
-        var heroDamaged = transform.GetChild(position); 
-        heroDamaged.GetComponent<Hero>().takeDamage(quantity);
-        if(heroDamaged.GetComponent<Hero>().dead)
+        GameObject heroDamaged = null;   
+        foreach(Transform child in transform)
         {
-            heroDamaged.transform.SetParent(null);
-            Destroy(heroDamaged.gameObject);
-            setHeroesIndex();
+            if(child.GetComponent<Hero>().position == position)
+            {
+                heroDamaged = child.gameObject;
+            }
         }
+        heroDamaged.GetComponent<Hero>().takeDamage(quantity);
+        // if(heroDamaged.GetComponent<Hero>().dead)
+        // {
+        //     // heroDamaged.transform.SetParent(null);
+        //     // Destroy(heroDamaged.gameObject);
+        //     // setHeroesIndex();
+        // }
 
     }
     public void confuseTarget(int position)

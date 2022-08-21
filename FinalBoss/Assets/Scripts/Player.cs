@@ -14,13 +14,14 @@ public class Player : MonoBehaviour
     public float amplitude;
 
     public HeroesManager heroesManager;
+    public bool dead;
     void Start()
     {
         heroesManager = GameObject.Find("Heroes").GetComponent<HeroesManager>();
 
         Health = this.GetComponent<Health>();
         Mana = this.GetComponent<Mana>();
-
+        dead = false;
 
         skills = new string[4]{"Paw of Doom","Fire Meow","Nyafe Drain", "Fearline"};
         //save initial y position
@@ -56,39 +57,74 @@ public class Player : MonoBehaviour
         int damage = 1;
         int manaCost = 2;
         //TODO pull 1 position if position > 1
-        heroesManager.dealDamage(damage,target);
-        if(target>0)
-            heroesManager.changeHeroPosition(target,target-1);
-        spendMana(manaCost);
+        if(Mana.mana - manaCost < 0)
+        {
+            spellFail();
+        }
+        else
+        {
+            heroesManager.dealDamage(damage,target);
+            if(target>0)
+                heroesManager.changeHeroPosition(target,target-1);
+            spendMana(manaCost);
+        }
+
     }
     public void fireSkill(int target)
     {
-        Debug.Log("Fire at"+ target);
+
         int damage = 2;
         int manaCost = 2;
-        heroesManager.dealDamage(damage,target);
-        spendMana(manaCost);
-         
+        if(Mana.mana - manaCost < 0)
+        {
+            spellFail();
+        }
+        else
+        {
+            Debug.Log("Fire at"+ target);
+            heroesManager.dealDamage(damage,target);
+            spendMana(manaCost);
+        }
+     
     }
     public void lifeSkill(int target)
     {
-        Debug.Log("Life at"+ target);
         int damage = 2;
         int manaCost = 3;
         //TODO heal for 3
-        heroesManager.dealDamage(damage,target);
-        recoverLife(3);
-        spendMana(manaCost);
+        if(Mana.mana - manaCost < 0)
+        {
+            
+            spellFail();
+        }
+        else
+        {
+            Debug.Log("Life at"+ target);
+            heroesManager.dealDamage(damage,target);
+            recoverLife(3);
+            spendMana(manaCost);
+        }
+
 
     }
     public void fearSkill(int target)
     {
-        Debug.Log("Fear at"+ target);
         int manaCost = 1;
         //TODO interrupt a enemy
         // heroesManager.dealDamage(damage,target);c
-        heroesManager.confuseTarget(target);
-        spendMana(manaCost);
+
+        if(Mana.mana - manaCost < 0)
+        {
+            spellFail();
+        }
+        else
+        {       
+            Debug.Log("Fear at"+ target);
+
+            heroesManager.confuseTarget(target);
+            spendMana(manaCost);
+
+        }
 
     }
 
@@ -97,6 +133,8 @@ public class Player : MonoBehaviour
     {
         Health.health -= quantity ;
         // Debug.Log("Aiii cuzao");
+        if(Health.health <= 0)
+            die();
     }
     void spendMana(int quantity)
     {
@@ -118,7 +156,16 @@ public class Player : MonoBehaviour
     }
 
 
- 
+    void spellFail()
+    {
+        Debug.Log("Spell Fail");
+    }
+    
+    public void die()
+    {
+        dead=true;
+        transform.GetChild(0).GetComponent<SpriteRenderer>().flipY = true;
 
+    }
 
 }

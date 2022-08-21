@@ -6,6 +6,14 @@ using UnityEngine.Events;
 
 using TMPro;
 
+
+
+using UnityEngine.SceneManagement;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+
 public class GameManager : MonoBehaviour
 {
     public GameObject buttons;
@@ -229,6 +237,12 @@ public class GameManager : MonoBehaviour
     public void playerWon()
     {
         Debug.Log("!BOAMANO");
+    }
+
+    public void GameOver()
+    {
+        //TODO
+        SceneManager.LoadScene(0);
     }
     
 }

@@ -113,7 +113,7 @@ public class Hero : MonoBehaviour
             confusion--;
             concentration=false;
         }
-        else
+        else if(dead == false)
         {
             if(heroClass == "warrior")
             {
@@ -137,7 +137,9 @@ public class Hero : MonoBehaviour
     public void die()
     {
         dead=true;
-        transform.GetChild(0).GetComponent<SpriteRenderer>().flipY = true;
+        // transform.GetChild(0).GetComponent<SpriteRenderer>().flipY = true;
+        heroIcon(false);
+        deadIcon(true);
 
     }
     //skills
@@ -155,7 +157,7 @@ public class Hero : MonoBehaviour
     public void heal()
     {
         Debug.Log("Healing Position " +heroesManager.getLowLife());
-        heroesManager.healLife(2,heroesManager.getLowLife());
+        heroesManager.healLife(1,heroesManager.getLowLife());
     }
     public void fireBall()
     {
@@ -177,5 +179,23 @@ public class Hero : MonoBehaviour
     public void glow(bool state)
     {
         transform.GetChild(2).gameObject.SetActive(state);
+    }
+
+    public void healIcon(bool state)
+    {
+        transform.GetChild(5).gameObject.SetActive(state);
+    }
+
+    public void fearIcon(bool state)
+    {
+        transform.GetChild(3).gameObject.SetActive(state);
+    }
+    public void deadIcon(bool state)
+    {
+        transform.GetChild(6).gameObject.SetActive(state);
+    }
+    public void heroIcon(bool state)
+    {
+        transform.GetChild(0).gameObject.SetActive(state);
     }
 }
