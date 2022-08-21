@@ -9,10 +9,20 @@ public class Hero : MonoBehaviour
     public int colorVariant;
     public int maxHealth = 3;
     public int position;
+    public bool dead;
+    public bool concentration;
 
+    public GameManager gameManager;
+    
+    public HeroesManager heroesManager;
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        heroesManager = GameObject.Find("Heroes").GetComponent<HeroesManager>();
+
+        concentration=false;
+        dead=false;
         //randomic hero generation
         setClass(Random.Range(0, 4));
         setHealth();
@@ -34,7 +44,15 @@ public class Hero : MonoBehaviour
     
     void setHealth()
     {
-        health = maxHealth;
+        if(heroClass=="warrior")
+        {
+            maxHealth=4;
+            health = maxHealth;
+        }
+        else
+        {
+            health = maxHealth;
+        }
     }
 
     void setClass(int index)
@@ -69,5 +87,72 @@ public class Hero : MonoBehaviour
         transform.GetChild(1).gameObject.SetActive(false);
 
         // Debug.Log("Mouse is no longer on GameObject.");
+    }
+
+
+    public void takeDamage(int quantity)
+    {
+        health-=quantity;
+        if(health <= 0)
+            die();
+    }
+
+    public void useSkill()
+    {
+        Debug.Log(heroClass);
+        if(heroClass == "warrior")
+        {
+            charge();
+        }
+        else if(heroClass == "archer")
+        {
+            doubleStrike();   
+        }
+        else if(heroClass == "healer")
+        {
+            heal();
+        }
+        else if(heroClass == "mage")
+        {
+            fireBall();
+        }
+    }
+    public void die()
+    {
+        dead=true;
+
+    }
+    //skills
+
+    public void charge()
+    {
+        Debug.Log("Charge");
+        gameManager.takeDamage("player",1,-1);
+    }
+    public void doubleStrike()
+    {
+        Debug.Log("DoubleStrike");
+        gameManager.takeDamage("player",2,-1);
+    }
+    public void heal()
+    {
+        Debug.Log("Healing Position " +heroesManager.getLowLife());
+        heroesManager.healLife(2,heroesManager.getLowLife());
+    }
+    public void fireBall()
+    {
+        if(concentration == false)
+        {
+            Debug.Log("Concentrationnnn");
+            concentration = true;
+
+        }
+        else
+        {
+            Debug.Log("EXISPROSION");
+
+            concentration = false;
+            gameManager.takeDamage("player",3,-1);
+        }
     }
 }

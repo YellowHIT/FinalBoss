@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     public Player player;
 
-    public HeroesManager enemies;
+    public HeroesManager heroesManager;
 
     public float skyRotationSpeed;
     
@@ -22,12 +22,12 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isPlayerTurn=false;
+        isPlayerTurn=true;
         isEnemyTurn=false;
 
         buttons = GameObject.Find("Panel");
         player = GameObject.Find("Player").GetComponent<Player>();
-        enemies = GameObject.Find("Heroes").GetComponent<HeroesManager>();
+        heroesManager = GameObject.Find("Heroes").GetComponent<HeroesManager>();
         buttonFunctionManager();
 
     }
@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         RotateBackgroundSky();
+        if(isEnemyTurn)
+            enemyTurn();
     }
 
     public void RotateBackgroundSky()
@@ -115,5 +117,13 @@ public class GameManager : MonoBehaviour
             
         }
     }
+
+    public void enemyTurn()
+    {
+        heroesManager.takeTurn();
+        isEnemyTurn = false;
+        isPlayerTurn = true;
+    }
+    
 
 }
