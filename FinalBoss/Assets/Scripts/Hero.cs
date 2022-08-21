@@ -11,7 +11,7 @@ public class Hero : MonoBehaviour
     public int position;
     public bool dead;
     public bool concentration;
-
+    public int confusion;
     public GameManager gameManager;
     
     public HeroesManager heroesManager;
@@ -20,13 +20,11 @@ public class Hero : MonoBehaviour
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         heroesManager = GameObject.Find("Heroes").GetComponent<HeroesManager>();
-
+        confusion = 0;
         concentration=false;
         dead=false;
         //randomic hero generation
-        setClass(Random.Range(0, 4));
-        setHealth();
-        Debug.Log(heroClass);
+
     }
 
     // Update is called once per frame
@@ -42,7 +40,7 @@ public class Hero : MonoBehaviour
         }
     }
     
-    void setHealth()
+    public void setHealth()
     {
         if(heroClass=="warrior")
         {
@@ -55,7 +53,7 @@ public class Hero : MonoBehaviour
         }
     }
 
-    void setClass(int index)
+    public void setClass(int index)
     {
         switch (index)
         {
@@ -108,22 +106,33 @@ public class Hero : MonoBehaviour
     public void useSkill()
     {
         Debug.Log(heroClass);
-        if(heroClass == "warrior")
+        //IF HERO CONFUSED
+        if(confusion > 0)
         {
-            charge();
+            Debug.Log("IM CONFUSED LUL");
+            confusion--;
+            concentration=false;
         }
-        else if(heroClass == "archer")
+        else
         {
-            doubleStrike();   
+            if(heroClass == "warrior")
+            {
+                charge();
+            }
+            else if(heroClass == "archer")
+            {
+                doubleStrike();   
+            }
+            else if(heroClass == "healer")
+            {
+                heal();
+            }
+            else if(heroClass == "mage")
+            {
+                fireBall();
+            }
         }
-        else if(heroClass == "healer")
-        {
-            heal();
-        }
-        else if(heroClass == "mage")
-        {
-            fireBall();
-        }
+
     }
     public void die()
     {

@@ -11,7 +11,7 @@ public class HeroesManager : MonoBehaviour
     public GameObject BaseHeroes;
     public bool isTargetSelected;
     public int heroSelected;
-
+    float[] initialPosition = {-0.85f,0.84f,2.61f,4.49f};   
     public List<GameObject> prefab;
 
     // Start is called before the first frame update
@@ -23,7 +23,6 @@ public class HeroesManager : MonoBehaviour
         foreach(Transform child in BaseHeroes.transform)
         {
             prefab.Add(child.gameObject);
-            Debug.Log("Nya");
         }
         instantiateHeroes();
         setHeroesIndex();
@@ -40,13 +39,17 @@ public class HeroesManager : MonoBehaviour
 
     public void instantiateHeroes()
     {
+        
         for(var i=0; i<4; i++)
         {
             var heroClass = Random.Range(0, 4);
             Debug.Log(prefab[heroClass]);
-            Instantiate(prefab[heroClass], new Vector3(i*0.8f,0,0),Quaternion.identity);
-            // setClass();
-            // setHealth();
+            var clone = Instantiate(prefab[heroClass], new Vector3(initialPosition[i],0,0),Quaternion.identity);
+            clone.transform.SetParent(this.transform);
+            clone.SetActive(true);
+
+            clone.GetComponent<Hero>().setClass(heroClass);
+            clone.GetComponent<Hero>().setHealth();
             Debug.Log(heroClass);
         }
     }
@@ -55,10 +58,15 @@ public class HeroesManager : MonoBehaviour
         int i=0;
         foreach (Transform child in transform)
         {
+            Debug.Log(child);
+
             hero = child.GetComponent<Hero>();
             hero.position=i;
             i++;
         }
+        if(i==0)
+            gameManager.playerWon();
+
     }
     public int getLowLife()
     {
@@ -109,6 +117,44 @@ public class HeroesManager : MonoBehaviour
 
     public void dealDamage(int quantity,int position)
     {
-        transform.GetChild(position).GetComponent<Hero>().takeDamage(quantity);
+        var heroDamaged = transform.GetChild(position); 
+        heroDamaged.GetComponent<Hero>().takeDamage(quantity);
+        if(heroDamaged.GetComponent<Hero>().dead)
+        {
+            heroDamaged.transform.SetParent(null);
+            Destroy(heroDamaged.gameObject);
+            setHeroesIndex();
+        }
+
+    }
+    public void confuseTarget(int position)
+    {
+        var heroDamaged = transform.GetChild(position); 
+        heroDamaged.GetComponent<Hero>().confusion = 2;
+    }
+
+    public void changeHeroPosition(int fromPosition, int toPosition)
+    {
+        GameObject heroPosition = null;
+        GameObject heroInPosition = null;
+        foreach (Transform child in transform)
+        {
+            if(child.GetComponent<Hero>().position == fromPosition)
+            {
+                heroPosition = child.gameObject;
+            }
+            else if(child.GetComponent<Hero>().position == toPosition)
+            {
+                heroInPosition = child.gameObject;
+            }
+
+        }
+        
+        //change position
+        var xPosAux = heroPosition.transform.position.x;
+        heroPosition.transform.position = new Vector3(heroInPosition.transform.position.x,heroPosition.transform.position.y,heroPosition.transform.position.z);
+        heroInPosition.transform.position = new Vector3(xPosAux,heroPosition.transform.position.y,heroPosition.transform.position.z);
+        heroPosition.GetComponent<Hero>().position = toPosition;
+        heroInPosition.GetComponent<Hero>().position = fromPosition;
     }
 }
