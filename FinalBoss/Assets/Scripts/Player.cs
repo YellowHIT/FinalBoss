@@ -8,14 +8,16 @@ public class Player : MonoBehaviour
     public Health Health;
     public Mana Mana;
     // Start is called before the first frame update
-    public string[] skills;
+    public List<string> skillNames = new List<string>{"Paw of Doom","Fire Meow","Nyafe Drain", "Fearline"};
     public float speed;
     float y0;
     public float amplitude;
-
+    float x0;
     public HeroesManager heroesManager;
     public GameManager gameManager;
     public bool dead;
+    public bool isAttacking;
+
     void Start()
     {
         heroesManager = GameObject.Find("Heroes").GetComponent<HeroesManager>();
@@ -25,12 +27,11 @@ public class Player : MonoBehaviour
         Mana = this.GetComponent<Mana>();
         dead = false;
 
-        skills = new string[4]{"Paw of Doom","Fire Meow","Nyafe Drain", "Fearline"};
         //save initial y position
         speed = 1.0f;
         y0 = transform.position.y;
         amplitude=0.1f;
-        
+        x0 = transform.position.x;
     }
 
     // Update is called once per frame
@@ -38,6 +39,7 @@ public class Player : MonoBehaviour
     {
         //makes the player float
         transform.position = new Vector3(transform.position.x, (y0+amplitude*Mathf.Sin(speed*Time.time)), transform.position.z);
+        attackAnimation();
     }
 
     public void useSkill(string skillName, int target)
@@ -169,7 +171,21 @@ public class Player : MonoBehaviour
 
     void spellFail()
     {
-        Debug.Log("Spell Fail");
+        StartCoroutine(notEnoughMana());
+        transform.GetChild(3).gameObject.SetActive(false);
+    }
+
+    IEnumerator notEnoughMana()
+    {
+        bool aux = true;
+        for(int i=0;i<6;i++)
+        {
+            transform.GetChild(3).gameObject.SetActive(aux);
+            aux=!aux;
+            yield return new WaitForSeconds(0.3f);
+            
+
+        }
     }
     
     public void die()
@@ -177,13 +193,19 @@ public class Player : MonoBehaviour
         dead=true;
         transform.GetChild(0).GetComponent<SpriteRenderer>().flipY = true;
         gameManager.GameOver();
-
-
-
     }
 
     public void slash(bool state)
     {
         transform.GetChild(2).gameObject.SetActive(state);
     }
+
+    public void attackAnimation()
+    {
+        if(isAttacking)
+            transform.position = new Vector3((x0+amplitude*Mathf.Sin(speed*10*Time.time)), transform.position.y, transform.position.z);
+        else
+            transform.position = new Vector3(x0, transform.position.y, transform.position.z);
+    }
+
 }
