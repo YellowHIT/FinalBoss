@@ -16,6 +16,13 @@ public class Hero : MonoBehaviour
     public GameManager gameManager;
     
     public HeroesManager heroesManager;
+
+    public float speed;
+    float y0;
+    public float amplitude;
+    float x0;
+    public bool isAttacking;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,12 +33,20 @@ public class Hero : MonoBehaviour
         concentration=false;
         dead=false;
         //randomic hero generation
-
+                //save initial y position
+        speed = 1.0f;
+        y0 = transform.position.y;
+        amplitude=0.1f;
+        x0 = transform.position.x;
+        isAttacking=false;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        attackAnimation();
+        
         if(confusion>0)
             transform.GetChild(3).gameObject.SetActive(true);
         else
@@ -223,5 +238,13 @@ public class Hero : MonoBehaviour
     public void heroIcon(bool state)
     {
         transform.GetChild(0).gameObject.SetActive(state);
+    }
+
+    public void attackAnimation()
+    {
+        if(isAttacking)
+            transform.position = new Vector3((x0+amplitude*Mathf.Sin(speed*10*Time.time)), transform.position.y, transform.position.z);
+        else
+            transform.position = new Vector3(x0, transform.position.y, transform.position.z);
     }
 }

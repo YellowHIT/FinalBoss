@@ -139,6 +139,7 @@ public class HeroesManager : MonoBehaviour
         foreach (Transform child in transform)
         {
             hero = child.GetComponent<Hero>();
+            hero.isAttacking=true;
             hero.transform.GetChild(5).gameObject.SetActive(false);
 
             hero.glow(true);
@@ -147,6 +148,9 @@ public class HeroesManager : MonoBehaviour
             heroAux = child.GetComponent<Hero>();
             heroAux.glow(false);
             heroAux.transform.GetChild(5).gameObject.SetActive(false);
+            heroAux.isAttacking=false;
+
+            
 
         }
         gameManager.slash(false);
@@ -196,7 +200,6 @@ public class HeroesManager : MonoBehaviour
             {
                 heroInPosition = child.gameObject;
             }
-
         }
         
         //change position

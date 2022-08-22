@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 // Debug.Log(player.skills[i]);
-                text.text = player.skills[i];
+                text.text = player.skillNames[i];
                 switch (i)
                 {
                     case 0:
@@ -156,10 +156,6 @@ public class GameManager : MonoBehaviour
                         button.onClick.AddListener(() => { SkillOnClick(3);});
                         break;
                 }
-                // text.text = child.name;
-                // button.onClick.AddListener(delegate{SkillOnClick(i);});
-                // text.text = playerskills[i];
-                // Debug.Log(player.GetComponent<Player>().skills);
 
                 i++;
 
@@ -202,6 +198,8 @@ public class GameManager : MonoBehaviour
         heroClick.AddListener(heroSelected);
 
         //now prompts to player select the enemy
+        chooseYourTarget(true);
+
         StartCoroutine(waitTarget(index));
 
 
@@ -212,10 +210,6 @@ public class GameManager : MonoBehaviour
         if(target=="player")
         {
             player.takeDamage(quantity);
-        }
-        else if(target=="hero")
-        {
-            
         }
     }
 
@@ -236,6 +230,8 @@ public class GameManager : MonoBehaviour
     private IEnumerator waitTarget(int index)
     {
         var playerIndex = -1;
+        player.isAttacking=true;
+
         yield return new WaitUntil(() => (target >= 0));
         switch (index)
         {
@@ -257,6 +253,9 @@ public class GameManager : MonoBehaviour
         }
         target = -1;
         heroClick.RemoveAllListeners();
+        player.isAttacking=false;
+        chooseYourTarget(false);
+
         //win condition
         if(heroesManager.checkIfPartyIsDead())
             playerWon();
@@ -265,7 +264,7 @@ public class GameManager : MonoBehaviour
 
     public void playerWon()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(3);
     }
 
     public void GameOver()
@@ -363,5 +362,8 @@ public class GameManager : MonoBehaviour
         player.slash(state);
     }
     
-
+    public void chooseYourTarget(bool state)
+    {
+        buttons.transform.parent.GetChild(5).gameObject.SetActive(state);
+    }
 }
