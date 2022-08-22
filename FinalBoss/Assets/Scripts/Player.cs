@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
     }
     public void fireSkill(int target)
     {
-
+        heroesManager.getHeroByIndex(0).GetComponent<Hero>().heroSelectedIcon(false);
         int damage = 2;
         int manaCost = 2;
         if(Mana.mana - manaCost < 0 || target !=0)

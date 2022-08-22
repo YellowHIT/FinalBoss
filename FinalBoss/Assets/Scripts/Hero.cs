@@ -45,6 +45,7 @@ public class Hero : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        x0 = transform.position.x;
         attackAnimation();
         
         if(confusion>0)
@@ -246,5 +247,10 @@ public class Hero : MonoBehaviour
             transform.position = new Vector3((x0+amplitude*Mathf.Sin(speed*10*Time.time)), transform.position.y, transform.position.z);
         else
             transform.position = new Vector3(x0, transform.position.y, transform.position.z);
+    }
+
+    public void heroSelectedIcon(bool state)
+    {
+        transform.GetChild(1).gameObject.SetActive(state);
     }
 }

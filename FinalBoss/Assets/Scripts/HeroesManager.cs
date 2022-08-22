@@ -109,7 +109,7 @@ public class HeroesManager : MonoBehaviour
             hero = child.GetComponent<Hero>();
             if(hero.dead == false)
                 partyIsDead=false;
-        }
+            }
         return partyIsDead;
     }
 
@@ -188,6 +188,7 @@ public class HeroesManager : MonoBehaviour
 
     public void changeHeroPosition(int fromPosition, int toPosition)
     {
+        
         GameObject heroPosition = null;
         GameObject heroInPosition = null;
         foreach (Transform child in transform)
@@ -200,6 +201,7 @@ public class HeroesManager : MonoBehaviour
             {
                 heroInPosition = child.gameObject;
             }
+
         }
         
         //change position
@@ -209,4 +211,6 @@ public class HeroesManager : MonoBehaviour
         heroPosition.GetComponent<Hero>().position = toPosition;
         heroInPosition.GetComponent<Hero>().position = fromPosition;
     }
+
+    
 }

@@ -231,8 +231,12 @@ public class GameManager : MonoBehaviour
     {
         var playerIndex = -1;
         player.isAttacking=true;
-
+        if(index==1)
+        {
+            heroesManager.getHeroByIndex(0).GetComponent<Hero>().heroSelectedIcon(true);
+        }
         yield return new WaitUntil(() => (target >= 0));
+
         switch (index)
         {
             case 0:
