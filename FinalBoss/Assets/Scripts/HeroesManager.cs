@@ -101,6 +101,18 @@ public class HeroesManager : MonoBehaviour
         return index;
     }
 
+    public bool checkIfPartyIsDead()
+    {
+        bool partyIsDead = true;
+        foreach (Transform child in transform)
+        {
+            hero = child.GetComponent<Hero>();
+            if(hero.dead == false)
+                partyIsDead=false;
+        }
+        return partyIsDead;
+    }
+
     
     public void healLife(int quantity,int position)
     {

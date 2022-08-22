@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     public Health Health;
     public Mana Mana;
     // Start is called before the first frame update
-    public string[] skills;
+    public string[] skills = {"Paw of Doom","Fire Meow","Nyafe Drain", "Fearline"};
     public float speed;
     float y0;
     public float amplitude;

@@ -257,6 +257,9 @@ public class GameManager : MonoBehaviour
         }
         target = -1;
         heroClick.RemoveAllListeners();
+        //win condition
+        if(heroesManager.checkIfPartyIsDead())
+            playerWon();
 
     }
 
@@ -271,11 +274,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(2);
     }
 
-    public void slash(bool state)
-    {
-        player.slash(state);
-    }
-    
+
 
 
 
@@ -359,6 +358,10 @@ public class GameManager : MonoBehaviour
             goTowardsTarget(indexTarget,projectilesOnScreen,indexSource);
         } 
     }
-
+    public void slash(bool state)
+    {
+        player.slash(state);
+    }
+    
 
 }

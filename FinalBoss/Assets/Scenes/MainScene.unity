@@ -5630,6 +5630,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1089141216579271210, guid: c826ed6f854eb134db4da37986aa04c0, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2431194329564022743, guid: c826ed6f854eb134db4da37986aa04c0, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -5753,6 +5757,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 652943934}
     m_Modifications:
+    - target: {fileID: 2845310360406274175, guid: cc8de91c0e526184fbc30145a6fa6521, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2845310361283280038, guid: cc8de91c0e526184fbc30145a6fa6521, type: 3}
       propertyPath: m_Name
       value: HeroMage
@@ -5887,6 +5895,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 652943934}
     m_Modifications:
+    - target: {fileID: 9164339561918248491, guid: 027448196b9359e4385512f5f79346be, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9164339562387795688, guid: 027448196b9359e4385512f5f79346be, type: 3}
       propertyPath: m_RootOrder
       value: 2
