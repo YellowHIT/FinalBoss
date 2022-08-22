@@ -243,10 +243,10 @@ public class Hero : MonoBehaviour
 
     public void attackAnimation()
     {
-        if(isAttacking)
-            transform.position = new Vector3((x0+amplitude*Mathf.Sin(speed*10*Time.time)), transform.position.y, transform.position.z);
-        else
-            transform.position = new Vector3(x0, transform.position.y, transform.position.z);
+        // if(isAttacking)
+        //     transform.position = new Vector3((x0+amplitude*Mathf.Sin(speed*10*Time.time)), transform.position.y, transform.position.z);
+        // else
+        //     transform.position = new Vector3(x0, transform.position.y, transform.position.z);
     }
 
     public void heroSelectedIcon(bool state)
