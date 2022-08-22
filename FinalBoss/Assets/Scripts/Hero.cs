@@ -129,9 +129,7 @@ public class Hero : MonoBehaviour
             }
             else if(heroClass == "archer")
             {
-                gameManager.indexTarget=-1;
-                gameManager.indexSource=position;
-                gameManager.skillNumber=2;
+
                 doubleStrike();   
             }
             else if(heroClass == "healer")
@@ -140,9 +138,7 @@ public class Hero : MonoBehaviour
             }
             else if(heroClass == "mage")
             {
-                gameManager.indexTarget=-1;
-                gameManager.indexSource=position;
-                gameManager.skillNumber=5;
+
                 fireBall();
             }
         }
@@ -167,7 +163,19 @@ public class Hero : MonoBehaviour
     public void doubleStrike()
     {
         Debug.Log("DoubleStrike");
-        gameManager.takeDamage("player",2,-1);
+        gameManager.indexTarget=-1;
+        gameManager.indexSource=position;
+        gameManager.skillNumber=2;
+        gameManager.takeDamage("player",1,-1);
+        var rand = Random.Range(0, 100);
+        if(rand <= 25)
+        {
+            Debug.Log("DoubleStrike");
+            gameManager.indexTarget=-1;
+            gameManager.indexSource=position;
+            gameManager.skillNumber=2;
+            gameManager.takeDamage("player",1,-1);
+        }
 
     }
     public void heal()
@@ -186,7 +194,9 @@ public class Hero : MonoBehaviour
         else
         {
             Debug.Log("EXISPROSION");
-
+            gameManager.indexTarget=-1;
+            gameManager.indexSource=position;
+            gameManager.skillNumber=5;
             concentration = false;
             gameManager.takeDamage("player",3,-1);
         }

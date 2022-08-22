@@ -284,50 +284,54 @@ public class GameManager : MonoBehaviour
     void goTowardsTarget(int indexTarget, GameObject prefabOject,int indexSource)
     {
         GameObject projectile = prefabOject;
-        float MinDist=0.1f;
+        float MinDist=0.4f;
         GameObject playerPosition = player.gameObject.transform.GetChild(1).gameObject;
-        if(indexTarget == -1)
+        if(projectile)
         {
-            projectile.transform.LookAt(playerPosition.transform);
-
-            if (Vector3.Distance(projectile.transform.position, playerPosition.transform.position) >= MinDist)
+            if(indexTarget == -1)
             {
-                //transllate towards player
-                projectile.transform.position+=projectile.transform.forward * MoveSpeed * Time.deltaTime;
-                projectile.transform.rotation = Quaternion.identity;
-            }
-            else
-            {
-                indexTarget=-1;
-                indexSource=-1;
-                skillNumber=-1;
-                OnScreen=false;
-                Destroy(projectile);
-            }
+                projectile.transform.LookAt(playerPosition.transform);
 
-        }
-        else
-        {
-            Transform targetHero = heroesManager.getHeroByIndex(indexTarget);
-
-            projectile.transform.LookAt(targetHero);
-
-            if (Vector3.Distance(projectile.transform.position, targetHero.position) >= MinDist)
-            {
-                //transllate towards player
-                projectile.transform.position+=projectile.transform.forward * MoveSpeed * Time.deltaTime;
-                projectile.transform.rotation = Quaternion.identity;
+                if (Vector3.Distance(projectile.transform.position, playerPosition.transform.position) >= MinDist)
+                {
+                    //transllate towards player
+                    projectile.transform.position+=projectile.transform.forward * MoveSpeed * Time.deltaTime;
+                    projectile.transform.rotation = Quaternion.identity;
+                }
+                else
+                {
+                    indexTarget=-1;
+                    indexSource=-1;
+                    skillNumber=-1;
+                    OnScreen=false;
+                    Destroy(projectile);
+                }
 
             }
             else
             {
-                indexTarget=-1;
-                indexSource=-1;
-                skillNumber=-1;
-                OnScreen=false;
-                Destroy(projectile);
+                Transform targetHero = heroesManager.getHeroByIndex(indexTarget);
+
+                projectile.transform.LookAt(targetHero);
+
+                if (Vector3.Distance(projectile.transform.position, targetHero.position) >= MinDist)
+                {
+                    //transllate towards player
+                    projectile.transform.position+=projectile.transform.forward * MoveSpeed * Time.deltaTime;
+                    projectile.transform.rotation = Quaternion.identity;
+
+                }
+                else
+                {
+                    indexTarget=-1;
+                    indexSource=-1;
+                    skillNumber=-1;
+                    OnScreen=false;
+                    Destroy(projectile);
+                }
             }
         }
+        
     }
 
     void animateSkill(int indexTarget, int skillNumber,int indexSource)
@@ -337,7 +341,7 @@ public class GameManager : MonoBehaviour
             return;
         else
         {
-            if(OnScreen == false)
+            if(OnScreen == false && skillNumber >= 0)
             {
                 if(indexSource==-1)
                 {
@@ -345,6 +349,8 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
+                    Debug.Log(skillNumber);
+                    Debug.Log(indexSource);
                     projectilesOnScreen = Instantiate(projectiles.transform.GetChild(skillNumber).gameObject,heroesManager.getHeroByIndex(indexSource).transform.position,Quaternion.identity);
                 }
                 projectilesOnScreen.SetActive(true);

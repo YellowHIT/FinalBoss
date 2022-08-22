@@ -80,7 +80,7 @@ public class Player : MonoBehaviour
 
         int damage = 2;
         int manaCost = 2;
-        if(Mana.mana - manaCost < 0)
+        if(Mana.mana - manaCost < 0 || target !=0)
         {
             spellFail();
         }
